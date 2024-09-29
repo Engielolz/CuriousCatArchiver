@@ -8,7 +8,7 @@ from datetime import datetime
 from time import sleep
 
 ###Setvars
-url = "https://curiouscat.qa/api/v2.1/profile"
+url = "https://curiouscat.live/api/v2.1/profile"
 
 initialdir = os.getcwd()
 downloadLocal = None
@@ -116,7 +116,7 @@ def downloadUserAnswers(userdata):
 	updateStatus(username, "Extracting Links From Json...", status)
 	jsonraw = json.dumps(fullJson)
 
-	regexQuery = '(https?://[^ ]*?\.curiouscat.qa/.+?)"'
+	regexQuery = '(https?://[^ ]*?\.curiouscat.me/.+?)"'
 
 	alllinks = re.findall(regexQuery, jsonraw)
 
@@ -134,7 +134,7 @@ def downloadUserAnswers(userdata):
 
 
 	for index, link in enumerate(links):
-		linkpath = re.sub('(/|https?://[^ ]*?\.curiouscat.qa/)', '', link)
+		linkpath = re.sub('(/|https?://[^ ]*?\.curiouscat.me/)', '', link)
 		response = requests.get(link)
 
 		updateStatus(username, "Downloading Images [%d/%d]..." % (index + 1, len(links)), status)
@@ -146,8 +146,8 @@ def downloadUserAnswers(userdata):
 	updateStatus(username, "Creating Local Copy Of File...", status)
 	localfile = open("local%sAnswers%s.json" % (username, time.strftime("%Y%m%d-%H%M%S")), 'w')
 
-	localJson = re.split(r'(https?://[^ ]*?\.curiouscat.qa/.+?)"', jsonraw)
-	localJson = ''.join(['CCArchive%s/Media/%s"' % (username, re.sub('(https?:/?/?[^ ]*?\.curiouscat.qa)|/', '', string)) if re.match(r'(https?://[^ ]*?\.curiouscat.qa/.+?)', string) != None else string for string in localJson])
+	localJson = re.split(r'(https?://[^ ]*?\.curiouscat.me/.+?)"', jsonraw)
+	localJson = ''.join(['CCArchive%s/Media/%s"' % (username, re.sub('(https?:/?/?[^ ]*?\.curiouscat.me)|/', '', string)) if re.match(r'(https?://[^ ]*?\.curiouscat.me/.+?)', string) != None else string for string in localJson])
 
 	localfile.write(localJson)
 	localfile.close()
