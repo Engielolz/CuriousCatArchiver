@@ -369,7 +369,7 @@
 				try {
 					post = entry.post;
 					date = new Date(post.timestamp * 1000);
-					humanDate = date.getDate() + " " + date.toLocaleString('default', { month: 'short' });
+					humanDate = date.toLocaleString('en-UK', { dateStyle: 'medium' }); // Mimic CuriousCat closer
 
 					loadMessage(++panelCounter, post.comment, post.senderData, humanDate, post.reply, post.likes, post.media);
 				} catch(err) {
